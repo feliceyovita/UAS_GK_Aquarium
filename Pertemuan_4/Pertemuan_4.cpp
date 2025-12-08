@@ -24,6 +24,7 @@ struct Bubble {
 };
 Bubble bubbles[MAX_BUBBLES];
 
+
 /* ============================
    INIT & SETUP
    ============================ */
@@ -63,6 +64,37 @@ void drawBar(float x, float y, float z, float sx, float sy, float sz) {
     glutSolidCube(1.0);
     glPopMatrix();
 }
+
+//BAtu
+void drawRock(float x, float z, float scale) {
+    glPushMatrix();
+    glColor3ub(115, 107, 97);
+    glTranslatef(x, -5.3f, z);
+    glScalef(scale * 1.4f, scale, scale * 1.2f);
+
+    double plane_eq[4] = { 0, 1, 0, 0 };
+    glClipPlane(GL_CLIP_PLANE0, plane_eq);
+    glEnable(GL_CLIP_PLANE0);
+    glutSolidSphere(1.0, 20, 20);
+    glDisable(GL_CLIP_PLANE0);
+    glPopMatrix();
+}
+
+
+void drawRockBalok(float x, float z, float scale) {
+    glPushMatrix();
+    glTranslatef(x, -5.3f, z);
+    glColor3ub(115, 107, 97);
+    glScalef(scale, scale, scale);
+    double plane_eq[4] = { 0, 1, 0, 0 };
+    glClipPlane(GL_CLIP_PLANE0, plane_eq);
+    glEnable(GL_CLIP_PLANE0);
+    glutSolidIcosahedron();
+    glDisable(GL_CLIP_PLANE0);
+    glPopMatrix();
+}
+
+
 
 void drawAquariumV2() {
     float w = 20.0f; float h = 12.0f; float d = 10.0f; float t = 0.3f;
@@ -149,7 +181,6 @@ void drawFish() {
     glPushMatrix();
     glTranslatef(fishX, 0.0f, 0.0f);
 
-
     float hover = sin(animT * 1.0f) * 0.15f;
     glTranslatef(0.0f, hover, 0.0f);
 
@@ -211,6 +242,61 @@ void drawFish() {
     glutSolidSphere(0.06, 10, 10);
     glPopMatrix();
 
+    glColor3f(0.95f, 0.45f, 0.05f);
+     
+    /* ===============================
+   MULUT 3D TABUNG PENDEK
+   =============================== */
+    glPushMatrix();
+    glTranslatef(-1.28f, 0.05f, 0.0f);
+    glRotatef(90, 0, 1, 0);
+    glScalef(0.35f, 0.35f, 0.35f);
+
+    GLUquadric* quad = gluNewQuadric();
+
+    glColor3f(0.95f, 0.45f, 0.0f);
+    gluCylinder(quad, 0.25, 0.22, 0.12, 20, 1);
+
+    glTranslatef(0, 0, 0.12f);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    gluCylinder(quad, 0.22f, 0.08f, 0.08f, 20, 1);
+
+    glColor3f(0.95f, 0.45f, 0.0f);
+    gluDisk(quad, 0.0f, 0.25, 20, 1);
+    glColor3f(0.95f, 0.45f, 0.0f);
+    gluCylinder(quad, 0.22, 0.22, 0.08, 20, 1);
+    glPopMatrix();
+
+    //SIRIP KANAN & KIRI
+    glDisable(GL_LIGHTING);
+    float finWave = sin(animT * 3.0f) * 10.0f;
+    //Sirip kanan
+    glPushMatrix();
+    glColor3f(1.0f, 0.45f, 0.0f);
+    glTranslatef(-0.1f, 0.0f, 0.55f); 
+    glRotatef(finWave, 1, 0, 0);      
+
+    glBegin(GL_TRIANGLES);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0.3f, 0.3f, 0);
+        glVertex3f(0.3f, -0.3f, 0);
+    glEnd();
+    glPopMatrix();
+
+    //Sirip kiri
+    glPushMatrix();
+    glColor3f(1.0f, 0.45f, 0.0f);
+    glTranslatef(-0.1f, 0.0f, -0.55f);
+    glRotatef(-finWave, 1, 0, 0);   
+
+    glBegin(GL_TRIANGLES);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0.3f, 0.3f, 0);
+        glVertex3f(0.3f, -0.3f, 0);
+    glEnd();
+    glPopMatrix();
+    glEnable(GL_LIGHTING);
+
     glPopMatrix();
 }
 
@@ -235,9 +321,10 @@ void drawBubbles() {
    ============================ */
 void update(int value) {
     if (swim) {
-        fishX += 0.03f * swimDir;
-        if (fishX > 7.0f)  swimDir = -1;
-        if (fishX < -7.0f) swimDir = 1;
+        fishX -= 0.03f * swimDir;
+        if (fishX > 7.0f)  swimDir = 1;  
+        if (fishX < -7.0f) swimDir = -1;  
+
 
         animT += 0.08f;
     }
@@ -268,13 +355,23 @@ void update(int value) {
 }
 
 void display() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(0x00004000 | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     gluLookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
     glRotatef(camRotX, 1, 0, 0);
     glRotatef(camRotY, 0, 1, 0);
 
     drawAquariumV2();
+
+    drawRock(-6, 1, 1.3f);
+    drawRock(4, -2, 1.0f);
+
+    drawRockBalok(7, 2, 1.2f);
+    drawRockBalok(-3, 3, 0.9f);
+    drawRockBalok(8, -3, 1.5f);
+    drawRockBalok(6, 4, 1.1f);    
+    drawRockBalok(2, 0, 1.5f);
+
 
     // Menempatkan rumput laut (posisi agak acak biar natural)
     drawSeaweed(-7, 3.0);
