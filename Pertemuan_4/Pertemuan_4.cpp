@@ -305,19 +305,44 @@ void drawFish() {
     gluCylinder(quad, 0.22, 0.22, 0.08, 20, 1);
     glPopMatrix();
 
+    glColor3f(0.95f, 0.45f, 0.05f);
+     
+    /* ===============================
+   MULUT 3D TABUNG PENDEK
+   =============================== */
+    glPushMatrix();
+    glTranslatef(-1.28f, 0.05f, 0.0f);
+    glRotatef(90, 0, 1, 0);
+    glScalef(0.35f, 0.35f, 0.35f);
+
+    GLUquadric* quad = gluNewQuadric();
+
+    glColor3f(0.95f, 0.45f, 0.0f);
+    gluCylinder(quad, 0.25, 0.22, 0.12, 20, 1);
+
+    glTranslatef(0, 0, 0.12f);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    gluCylinder(quad, 0.22f, 0.08f, 0.08f, 20, 1);
+
+    glColor3f(0.95f, 0.45f, 0.0f);
+    gluDisk(quad, 0.0f, 0.25, 20, 1);
+    glColor3f(0.95f, 0.45f, 0.0f);
+    gluCylinder(quad, 0.22, 0.22, 0.08, 20, 1);
+    glPopMatrix();
+
     //SIRIP KANAN & KIRI
     glDisable(GL_LIGHTING);
     float finWave = sin(animT * 3.0f) * 10.0f;
     //Sirip kanan
     glPushMatrix();
     glColor3f(1.0f, 0.45f, 0.0f);
-    glTranslatef(-0.1f, 0.0f, 0.55f);
-    glRotatef(finWave, 1, 0, 0);
+    glTranslatef(-0.1f, 0.0f, 0.55f); 
+    glRotatef(finWave, 1, 0, 0);      
 
     glBegin(GL_TRIANGLES);
-    glVertex3f(0, 0, 0);
-    glVertex3f(0.3f, 0.3f, 0);
-    glVertex3f(0.3f, -0.3f, 0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0.3f, 0.3f, 0);
+        glVertex3f(0.3f, -0.3f, 0);
     glEnd();
     glPopMatrix();
 
@@ -325,12 +350,12 @@ void drawFish() {
     glPushMatrix();
     glColor3f(1.0f, 0.45f, 0.0f);
     glTranslatef(-0.1f, 0.0f, -0.55f);
-    glRotatef(-finWave, 1, 0, 0);
+    glRotatef(-finWave, 1, 0, 0);   
 
     glBegin(GL_TRIANGLES);
-    glVertex3f(0, 0, 0);
-    glVertex3f(0.3f, 0.3f, 0);
-    glVertex3f(0.3f, -0.3f, 0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0.3f, 0.3f, 0);
+        glVertex3f(0.3f, -0.3f, 0);
     glEnd();
     glPopMatrix();
     glEnable(GL_LIGHTING);
@@ -360,8 +385,8 @@ void drawBubbles() {
 void update(int value) {
     if (swim) {
         fishX -= 0.03f * swimDir;
-        if (fishX > 7.0f)  swimDir = 1;
-        if (fishX < -7.0f) swimDir = -1;
+        if (fishX > 7.0f)  swimDir = 1;  
+        if (fishX < -7.0f) swimDir = -1;  
 
 
         animT += 0.08f;
@@ -410,7 +435,7 @@ void display() {
     drawRockBalok(7, 2, 1.2f);
     drawRockBalok(-3, 3, 0.9f);
     drawRockBalok(8, -3, 1.5f);
-    drawRockBalok(6, 4, 1.1f);
+    drawRockBalok(6, 4, 1.1f);    
     drawRockBalok(2, 0, 1.5f);
 
 
