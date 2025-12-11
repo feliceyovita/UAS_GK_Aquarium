@@ -306,29 +306,6 @@ void drawFish() {
     glPopMatrix();
 
     glColor3f(0.95f, 0.45f, 0.05f);
-     
-    /* ===============================
-   MULUT 3D TABUNG PENDEK
-   =============================== */
-    glPushMatrix();
-    glTranslatef(-1.28f, 0.05f, 0.0f);
-    glRotatef(90, 0, 1, 0);
-    glScalef(0.35f, 0.35f, 0.35f);
-
-    GLUquadric* quad = gluNewQuadric();
-
-    glColor3f(0.95f, 0.45f, 0.0f);
-    gluCylinder(quad, 0.25, 0.22, 0.12, 20, 1);
-
-    glTranslatef(0, 0, 0.12f);
-    glColor3f(0.0f, 0.0f, 0.0f);
-    gluCylinder(quad, 0.22f, 0.08f, 0.08f, 20, 1);
-
-    glColor3f(0.95f, 0.45f, 0.0f);
-    gluDisk(quad, 0.0f, 0.25, 20, 1);
-    glColor3f(0.95f, 0.45f, 0.0f);
-    gluCylinder(quad, 0.22, 0.22, 0.08, 20, 1);
-    glPopMatrix();
 
     //SIRIP KANAN & KIRI
     glDisable(GL_LIGHTING);
